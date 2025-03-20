@@ -1,23 +1,26 @@
 # Используем официальный образ Node.js
 FROM node:18-alpine
 
+# Устанавливаем pnpm
+RUN npm install -g pnpm
+
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем package.json и package-lock.json
-COPY package*.json ./
+# Копируем package.json и pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml ./
 
-# Устанавливаем зависимости
-RUN npm install
+# Устанавливаем зависимости с помощью pnpm
+RUN pnpm install --frozen-lockfile
 
 # Копируем исходный код
 COPY . .
 
 # Собираем проект
-RUN npm run build
+RUN pnpm build
 
 # Указываем порт, который будет использовать приложение
 EXPOSE 8080
 
 # Команда для запуска приложения
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
