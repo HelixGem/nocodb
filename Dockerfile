@@ -1,5 +1,5 @@
-# Используем официальный образ Node.js
-FROM node:18-alpine
+# Используем официальный образ Node.js с glibc
+FROM node:18
 
 # Устанавливаем pnpm
 RUN npm install -g pnpm
